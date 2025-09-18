@@ -1,0 +1,20 @@
+[Bot]
+# If empty, use environment variable `TELEGRAM_BOT_TOKEN`
+Token = ""
+MessageMaxLength = 2048
+AllowedUsers = [
+    1632818127,
+    7889609501,
+    245919609,
+]
+
+[Task]
+# in seconds
+Timeout = 30
+TaskPoolCapacity = 3
+QueueCapacity = 5
+
+[Docker]
+Name = "run_ruby_bot"
+Memory = "20M"
+Cpus = 0.1
