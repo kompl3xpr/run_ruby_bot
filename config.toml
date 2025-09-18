@@ -3,11 +3,7 @@
 Token = ""
 MessageMaxLength = 2048
 Whitelist = true
-AllowedUsers = [
-    1632818127,
-    7889609501,
-    245919609,
-]
+AllowedUsers = [1632818127, 7889609501, 245919609]
 
 [Task]
 # in seconds

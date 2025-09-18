@@ -29,14 +29,20 @@ func InitInterpreter() {
 	slog.Info("removing old docker image...")
 	cmd := exec.Command("docker", "rmi", Cfg().Docker.Name)
 	if err := cmd.Run(); err != nil {
-		slog.Warn("failed to remove image, ", slog.String("error", err.Error()))
+		slog.Warn("failed to remove image, ", "error", err.Error())
 	}
 
 	slog.Info("building new docker image...")
 	cmd = exec.Command("docker", "build", "-t", Cfg().Docker.Name, ".")
+	var stderrBuf bytes.Buffer
+	cmd.Stderr = &stderrBuf
 	err := cmd.Run()
 	if err != nil {
-		slog.Error("failed to rebuild image, ", slog.String("error", err.Error()))
+		slog.Error(
+			"failed to rebuild image, ",
+			"error", err.Error(),
+			"stderr", stderrBuf.String(),
+		)
 		os.Exit(4)
 	}
 

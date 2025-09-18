@@ -5,7 +5,6 @@ import (
 	"html"
 	"log/slog"
 	"run_ruby_bot/core"
-	"strings"
 )
 
 type SourceCode string
@@ -29,11 +28,6 @@ func InitService() {
 
 func RunInterpretTask(srcCode SourceCode, ch chan<- HTMLMessage) {
 	defer close(ch)
-
-	if len(strings.TrimSpace(string(srcCode))) == 0 {
-		ch <- HTMLMessage("<em>no input</em>")
-		return
-	}
 
 	select {
 	case waitSem <- struct{}{}:

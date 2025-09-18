@@ -11,16 +11,16 @@ import (
 
 type Config struct {
 	Bot struct {
-		Token string
-		Whitelist bool
-		AllowedUsers []int64
-		AllowedUsersSet map[int64]bool
+		Token            string
+		Whitelist        bool
+		AllowedUsers     []int64
+		AllowedUsersSet  map[int64]bool
 		MessageMaxLength int
 	}
 	Task struct {
-		Timeout time.Duration
+		Timeout          time.Duration
 		TaskPoolCapacity int
-		QueueCapacity int
+		QueueCapacity    int
 	}
 	Docker struct {
 		Name   string
@@ -38,16 +38,14 @@ func InitCfg() {
 
 	slog.Info("reading configurations from file...")
 	if err := viper.ReadInConfig(); err != nil {
-		slog.Error("failed to read configurations, ", slog.String("error", err.Error()))
+		slog.Error("failed to read configurations, ", "error", err.Error())
 		os.Exit(1)
 	}
-
-
 
 	var config Config
 	slog.Info("parsing configurations...")
 	if err := viper.Unmarshal(&config); err != nil {
-		slog.Error("failed to parse configurations, ", slog.String("error", err.Error()))
+		slog.Error("failed to parse configurations, ", "error", err.Error())
 		os.Exit(2)
 	}
 
@@ -68,7 +66,7 @@ func InitCfg() {
 	}
 
 	instance = &config
-	slog.Info("", slog.String("configuration", fmt.Sprintf("%#v", config)))
+	slog.Info("configuration loaded", "cfg", fmt.Sprintf("%#v", config))
 }
 
 func Cfg() *Config {

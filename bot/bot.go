@@ -9,14 +9,16 @@ import (
 
 func NewRunRubyBot() *tg.Bot {
 	opts := []tg.Option{
-		tg.WithDefaultHandler(rubyCodeHandler),
+		tg.WithDefaultHandler(DefaultHandler),
 	}
 
 	b, err := tg.New(core.Cfg().Bot.Token, opts...)
 	if err != nil {
-		slog.Error("failed to create the telegram bot,", slog.String("error", err.Error()))
+		slog.Error("failed to create the telegram bot,", "error", err.Error())
 		panic("initialization failed")
 	}
-	b.RegisterHandler(tg.HandlerTypeMessageText, "/start", tg.MatchTypeExact, startHandler)
+	b.RegisterHandler(tg.HandlerTypeMessageText, "/start", tg.MatchTypeExact, CmdStartHandler)
+	b.RegisterHandler(tg.HandlerTypeMessageText, "/ruby ", tg.MatchTypePrefix, CmdRubyHandler)
+	b.RegisterHandler(tg.HandlerTypeMessageText, "/ruby\n", tg.MatchTypePrefix, CmdRubyHandler)
 	return b
 }
