@@ -25,7 +25,7 @@ type InterpretResult struct {
 	Status InterpretStatus
 }
 
-func InitInterpreter() bool {
+func InitInterpreter() {
 	slog.Info("removing old docker image...")
 	cmd := exec.Command("docker", "rmi", Cfg().Docker.Name)
 	if err := cmd.Run(); err != nil {
@@ -37,11 +37,10 @@ func InitInterpreter() bool {
 	err := cmd.Run()
 	if err != nil {
 		slog.Error("failed to rebuild image, ", slog.String("error", err.Error()))
-		return false
+		os.Exit(4)
 	}
 
 	slog.Info("docker image rebuilt")
-	return true
 }
 
 func Interpret(code string) InterpretResult {

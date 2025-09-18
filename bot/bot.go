@@ -7,7 +7,7 @@ import (
 	tg "github.com/go-telegram/bot"
 )
 
-func InitBot() *tg.Bot {
+func NewRunRubyBot() *tg.Bot {
 	opts := []tg.Option{
 		tg.WithDefaultHandler(rubyCodeHandler),
 	}
