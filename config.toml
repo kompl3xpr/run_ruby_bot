@@ -2,6 +2,7 @@
 # If empty, use environment variable `TELEGRAM_BOT_TOKEN`
 Token = ""
 MessageMaxLength = 2048
+Whitelist = true
 AllowedUsers = [
     1632818127,
     7889609501,

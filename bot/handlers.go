@@ -18,7 +18,7 @@ func startHandler(ctx context.Context, b *tg.Bot, update *models.Update) {
 
 func rubyCodeHandler(ctx context.Context, b *tg.Bot, update *models.Update) {
 	userId := update.Message.From.ID
-	if !core.Cfg().Bot.AllowedUsersSet[userId] {
+	if core.Cfg().Bot.Whitelist && !core.Cfg().Bot.AllowedUsersSet[userId] {
 		b.SendMessage(ctx, &tg.SendMessageParams{
 			ChatID:    update.Message.Chat.ID,
 			Text:      "<em>permission denied</em>",

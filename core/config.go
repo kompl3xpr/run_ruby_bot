@@ -12,6 +12,7 @@ import (
 type Config struct {
 	Bot struct {
 		Token string
+		Whitelist bool
 		AllowedUsers []int64
 		AllowedUsersSet map[int64]bool
 		MessageMaxLength int
