@@ -41,19 +41,22 @@ func RunInterpretTask(srcCode SourceCode, ch chan<- HTMLMessage) {
 
 	ch <- HTMLMessage("<em>running...</em>")
 	result := core.Interpret(string(srcCode))
-	msg := html.EscapeString(shorten(result.Msg))
+	value := html.EscapeString(shorten(result.Value))
+	
+	var msg string
 	switch result.Status {
 	case core.SuccessWithOutput:
-		ch <- HTMLMessage(fmt.Sprintf("<code>%v</code>", msg))
+		msg = fmt.Sprintf("<code>%v</code>", value)
 	case core.SuccessWithoutOutput:
-		ch <- HTMLMessage("<em>no output</em>")
+		msg = "<em>no output</em>"
 	case core.Timeout:
-		ch <- HTMLMessage("<em>timeout</em>")
+		msg = "<em>timeout</em>"
 	case core.CodeError:
-		ch <- HTMLMessage(fmt.Sprintf("<pre>%v</pre>", msg))
+		msg = fmt.Sprintf("<pre>%v</pre>", value)
 	case core.InternalError:
-		ch <- HTMLMessage(fmt.Sprintf("<em>internal error: %v</em>", msg))
+		msg = fmt.Sprintf("<em>internal error: %v</em>", value)
 	}
+	ch <- HTMLMessage(msg)
 
 	<-taskSem
 	<-waitSem

@@ -21,7 +21,7 @@ const (
 )
 
 type InterpretResult struct {
-	Msg    string
+	Value  string
 	Status InterpretStatus
 }
 
